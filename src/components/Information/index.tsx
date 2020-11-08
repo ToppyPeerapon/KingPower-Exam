@@ -45,7 +45,7 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
     let index = 13
     let result = 0
 
-    if (id.length === 13) return 'Citizen id not complete 13 digits'
+    if (id.length !== 13) return 'Citizen id not complete 13 digits'
     for (let i = 0; i < 12; i++) {
       result += Number(id[i]) * index
       index--
@@ -53,12 +53,12 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
     result %= 11
     result -= 11
 
-    if (result !== Number(id[12])) return 'Not format citizen id'
+    if (Number(id[12]) !== Math.abs(result)) return 'Not format citizen id'
     return true
   }
 
   const validationMobilePhone = (number: string): string | boolean => {
-    if (number.length === 10) return 'Mobile phone not complete 10 Digit'
+    if (number.length !== 10) return 'Mobile phone not complete 10 Digit'
     return true
   }
 
@@ -112,7 +112,7 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
     if (typeof validateMessageMobilePhone === 'string') {
       notification['warning']({
         message: 'Validation failed',
-        description: validateMessageCitizenId,
+        description: validateMessageMobilePhone,
       })
 
       return
