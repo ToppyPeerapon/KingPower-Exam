@@ -1,4 +1,4 @@
-import { Button, DatePicker, Input, Radio, Select } from 'antd'
+import { Alert, Button, DatePicker, Input, notification, Radio, Select } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import * as React from 'react'
 import { v4 } from 'uuid'
@@ -51,8 +51,28 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
       !mobilePhone ||
       !expectSalary ||
       !birthday
-    )
+    ) {
+      let messages: string[] = []
+      if (!title) messages = [...messages, 'Title']
+      if (!firstName) messages = [...messages, 'First name']
+      if (!lastName) messages = [...messages, 'Last name']
+      if (!citizenId) messages = [...messages, 'Citizen id']
+      if (!mobileCode) messages = [...messages, 'Mobile code']
+      if (!mobilePhone) messages = [...messages, 'Mobile phone']
+      if (!passportNo) messages = [...messages, 'Passport no']
+      if (!expectSalary) messages = [...messages, 'Expect salary']
+
+      notification['warning']({
+        message: 'Please input',
+        description: messages.map(message => (
+          <>
+            <Text key={message}>{message}</Text>
+            <br />
+          </>
+        )),
+      })
       return
+    }
 
     const id = defaultInfo?.id ? defaultInfo.id : v4()
 
