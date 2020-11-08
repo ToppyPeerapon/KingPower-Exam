@@ -1,4 +1,4 @@
-import { Alert, Button, DatePicker, Input, notification, Radio, Select } from 'antd'
+import { Button, DatePicker, Input, notification, Radio, Select } from 'antd'
 import Text from 'antd/lib/typography/Text'
 import * as React from 'react'
 import { v4 } from 'uuid'
@@ -41,7 +41,29 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
     setExpectSalary(defaultInfo.expectSalary)
   }, [defaultInfo])
 
+  const validationCitizenId = (id: string): string | boolean => {
+    let index = 13
+    let result = 0
+
+    if (id.length === 13) return 'Citizen id not complete 13 digits'
+    for (let i = 0; i < 12; i++) {
+      result += Number(id[i]) * index
+      index--
+    }
+    result %= 11
+    result -= 11
+
+    if (result !== Number(id[12])) return 'Not format citizen id'
+    return true
+  }
+
+  const validationMobilePhone = (number: string): string | boolean => {
+    if (number.length === 10) return 'Mobile phone not complete 10 Digit'
+    return true
+  }
+
   const handleSubmit = (): void => {
+    let messages: string[] = []
     if (
       !title ||
       !firstName ||
@@ -52,18 +74,17 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
       !expectSalary ||
       !birthday
     ) {
-      let messages: string[] = []
-      if (!title) messages = [...messages, 'Title']
-      if (!firstName) messages = [...messages, 'First name']
-      if (!lastName) messages = [...messages, 'Last name']
-      if (!citizenId) messages = [...messages, 'Citizen id']
-      if (!mobileCode) messages = [...messages, 'Mobile code']
-      if (!mobilePhone) messages = [...messages, 'Mobile phone']
-      if (!passportNo) messages = [...messages, 'Passport no']
-      if (!expectSalary) messages = [...messages, 'Expect salary']
+      if (!title) messages = [...messages, 'Please input your title']
+      if (!firstName) messages = [...messages, 'Please input your first name']
+      if (!lastName) messages = [...messages, 'Please input your last name']
+      if (!citizenId) messages = [...messages, 'Please input your citizen id']
+      if (!mobileCode) messages = [...messages, 'Please input your mobile code']
+      if (!mobilePhone) messages = [...messages, 'Please input your mobile phone']
+      if (!passportNo) messages = [...messages, 'Please input your passport no']
+      if (!expectSalary) messages = [...messages, 'Please input your expect salary']
 
       notification['warning']({
-        message: 'Please input',
+        message: 'Validation failed',
         description: messages.map(message => (
           <>
             <Text key={message}>{message}</Text>
@@ -71,6 +92,29 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
           </>
         )),
       })
+      messages = []
+      return
+    }
+
+    const validateMessageCitizenId = validationCitizenId(citizenId)
+
+    if (typeof validateMessageCitizenId === 'string') {
+      notification['warning']({
+        message: 'Validation failed',
+        description: validateMessageCitizenId,
+      })
+
+      return
+    }
+
+    const validateMessageMobilePhone = validationMobilePhone(mobilePhone)
+
+    if (typeof validateMessageMobilePhone === 'string') {
+      notification['warning']({
+        message: 'Validation failed',
+        description: validateMessageCitizenId,
+      })
+
       return
     }
 

@@ -24,7 +24,7 @@ export const TableInformation: React.FC<Props> = ({ infos, onDelete, onEdit }) =
     },
     {
       title: 'Mobile Phone',
-      dataIndex: 'mobilePhone',
+      dataIndex: 'mobileNumber',
       key: 'mobilePhone',
     },
     {
@@ -54,8 +54,15 @@ export const TableInformation: React.FC<Props> = ({ infos, onDelete, onEdit }) =
     return {
       ...info,
       name: `${info.firstName} ${info.lastName}`,
+      mobileNumber: `${info.mobileCode}${info.mobilePhone}`,
     }
   })
 
-  return <Table columns={columns} dataSource={dataSource}></Table>
+  return (
+    <Table
+      pagination={{ position: ['topRight'] }}
+      columns={columns}
+      dataSource={dataSource}
+    ></Table>
+  )
 }
