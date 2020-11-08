@@ -1,3 +1,5 @@
+import { Moment } from 'moment'
+
 export enum Title {
   Mr = 'MR',
   Ms = 'MS',
@@ -270,10 +272,11 @@ export type Info = {
   title: Title
   firstName: string
   lastName: string
-  birthday: Date
+  birthday: Moment
   nationality?: Nationality
   citizenId?: string
   gender?: Gender
+  mobileCode: PhoneCode
   mobilePhone: string
   passportNo?: string
   expectSalary: string

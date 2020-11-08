@@ -8,4 +8,169 @@
   flex-direction: row;
   display: flex;
   flex: 1;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.container-title {
+  flex: 0.2;
+  flex-direction: row;
+  display: flex;
+}
+
+.container-title .header {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.container-title .input {
+  flex: 0.5;
+}
+
+.container-first-name {
+  flex: 0.33;
+  flex-direction: row;
+  display: flex;
+}
+
+.container-first-name .header {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.container-first-name .input {
+  flex: 0.5;
+}
+
+.container-last-name {
+  flex: 0.33;
+  flex-direction: row;
+  display: flex;
+}
+
+.container-last-name .header {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.container-last-name .input {
+  flex: 0.5;
+}
+
+.container-birthday {
+  display: flex;
+  flex-direction: row;
+  flex: 0.4;
+}
+
+.container-birthday .header {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.container-birthday .input {
+  flex: 0.5;
+}
+
+.container-nationality {
+  display: flex;
+  flex-direction: row;
+  flex: 0.4;
+}
+
+.container-nationality .header {
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.container-nationality .input {
+  flex: 0.5;
+}
+
+.container-citizen-id {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.container-citizen-id .header {
+  margin-right: 10px;
+  align-items: center;
+  display: flex;
+}
+
+.container-citizen-id .input {
+  flex: 0.5;
+}
+
+.container-gender {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.container-gender .header {
+  margin-right: 10px;
+  align-items: center;
+  display: flex;
+}
+
+.container-gender .input {
+  flex: 0.5;
+}
+
+.container-mobile-phone {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.container-mobile-phone .select {
+  width: 10%;
+}
+
+.container-mobile-phone .dash {
+  margin-left: 5px;
+  margin-right: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.container-mobile-phone .header {
+  margin-right: 10px;
+  align-items: center;
+  display: flex;
+}
+
+.container-mobile-phone .input {
+  flex: 0.5;
+}
+
+.container-passport {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.container-passport .header {
+  margin-right: 10px;
+  align-items: center;
+  display: flex;
+}
+
+.container-expect-salary {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+}
+
+.container-expect-salary .header {
+  margin-right: 10px;
+  align-items: center;
+  display: flex;
 }

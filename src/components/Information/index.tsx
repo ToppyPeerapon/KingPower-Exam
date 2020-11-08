@@ -4,6 +4,7 @@ import * as React from 'react'
 import { v4 } from 'uuid'
 import { Gender, Info, Nationality, PhoneCode, Title } from '../../constant/Information'
 import './index.css'
+import moment from 'moment'
 
 type Props = {
   defaultInfo?: Info
@@ -12,10 +13,10 @@ type Props = {
 }
 
 export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
-  const [title, setTitle] = React.useState<Title>(Title.Mr)
+  const [title, setTitle] = React.useState<Title>()
   const [firstName, setFirstName] = React.useState<string>()
   const [lastName, setLastName] = React.useState<string>()
-  const [birthday, setBirthday] = React.useState<Date>()
+  const [birthday, setBirthday] = React.useState<Info['birthday']>()
   const [nationality, setNationality] = React.useState<Nationality>()
   const [citizenId, setCitizenId] = React.useState<string>()
   const [gender, setGender] = React.useState<Gender>()
@@ -30,26 +31,53 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
     setTitle(defaultInfo.title)
     setFirstName(defaultInfo.firstName)
     setLastName(defaultInfo.lastName)
-
+    setBirthday(defaultInfo.birthday)
     setNationality(defaultInfo.nationality)
     setCitizenId(defaultInfo.citizenId)
     setGender(defaultInfo.gender)
+    setMobileCode(defaultInfo.mobileCode)
+    setMobilePhone(defaultInfo.mobilePhone)
+    setPassportNo(defaultInfo.passportNo)
+    setExpectSalary(defaultInfo.expectSalary)
   }, [defaultInfo])
 
   const handleSubmit = (): void => {
-    if (!title || !firstName || !lastName || !citizenId || !mobilePhone || !expectSalary) return
+    if (
+      !title ||
+      !firstName ||
+      !lastName ||
+      !citizenId ||
+      !mobileCode ||
+      !mobilePhone ||
+      !expectSalary ||
+      !birthday
+    )
+      return
 
     const id = defaultInfo?.id ? defaultInfo.id : v4()
+
+    setTitle(undefined)
+    setFirstName(undefined)
+    setLastName(undefined)
+    setBirthday(undefined)
+    setNationality(undefined)
+    setCitizenId(undefined)
+    setGender(undefined)
+    setMobileCode(undefined)
+    setMobilePhone(undefined)
+    setPassportNo(undefined)
+    setExpectSalary(undefined)
 
     onSubmit({
       id,
       title,
       firstName,
       lastName,
-      birthday: new Date(),
+      birthday,
       nationality,
       citizenId,
       gender,
+      mobileCode,
       mobilePhone,
       passportNo,
       expectSalary,
@@ -58,57 +86,68 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
 
   return (
     <div className="container">
-      <div style={{ flexDirection: 'row', display: 'flex', flex: 1 }}>
-        <div style={{ flex: 0.2, flexDirection: 'row', display: 'flex' }}>
-          <div style={{ flex: 0.5, marginRight: '10px', display: 'flex' }}>
+      <div className="row">
+        <div className="container-title">
+          <div className="header">
             <Text>Title : </Text>
             <Text type="danger">*</Text>
           </div>
-          <div style={{ flex: 0.5 }}>
-            <Select onChange={valueChanged => setTitle(valueChanged)} value={title}>
+          <div className="input">
+            <Select
+              style={{ width: '100%' }}
+              onChange={valueChanged => setTitle(valueChanged)}
+              value={title}
+            >
               <Select.Option value={Title.Mr}>{Title.Mr}</Select.Option>
               <Select.Option value={Title.Ms}>{Title.Ms}</Select.Option>
             </Select>
           </div>
         </div>
 
-        <div style={{ flex: 0.33, flexDirection: 'row', display: 'flex' }}>
-          <div style={{ flex: 0.5, marginRight: '10px', display: 'flex' }}>
+        <div className="container-first-name">
+          <div className="header">
             <Text>First name : </Text>
             <Text type="danger">*</Text>
           </div>
-          <div style={{ flex: 0.5 }}>
+          <div className="input">
             <Input value={firstName} onChange={e => setFirstName(e.target.value)} />
           </div>
         </div>
 
-        <div style={{ flex: 0.33, flexDirection: 'row', display: 'flex' }}>
-          <div style={{ flex: 0.5, marginRight: '10px', display: 'flex' }}>
+        <div className="container-last-name">
+          <div className="header">
             <Text>Last name : </Text>
             <Text type="danger">*</Text>
           </div>
-          <div style={{ flex: 0.5 }}>
+          <div className="input">
             <Input value={lastName} onChange={e => setLastName(e.target.value)} />
           </div>
         </div>
       </div>
 
       <div className="row">
-        <div style={{ display: 'flex', flexDirection: 'row', flex: 0.4 }}>
-          <div style={{ flex: 0.5, marginRight: '10px', display: 'flex' }}>
+        <div className="container-birthday">
+          <div className="header">
             <Text>Birthday : </Text>
             <Text type="danger">*</Text>
           </div>
-          <div style={{ flex: 0.5 }}>
-            <DatePicker format="MM/DD/YY" />
+          <div className="input">
+            <DatePicker
+              value={birthday ? moment(birthday) : undefined}
+              onChange={(date: moment.Moment | null) => {
+                if (!date) return
+                setBirthday(date)
+              }}
+              format="MM/DD/YY"
+            />
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'row', flex: 0.4 }}>
-          <div style={{ flex: 0.5, marginRight: '10px', display: 'flex' }}>
+        <div className="container-nationality">
+          <div className="header">
             <Text>Nationality : </Text>
           </div>
-          <div style={{ flex: 0.5 }}>
+          <div className="input">
             <Select
               onChange={valueChanged => setNationality(valueChanged)}
               value={nationality}
@@ -126,20 +165,20 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
         </div>
       </div>
 
-      <div className="row">
-        <div>
+      <div className="row container-citizen-id">
+        <div className="header">
           <Text>CitizenID : </Text>
         </div>
-        <div>
+        <div className="input">
           <Input value={citizenId} onChange={e => setCitizenId(e.target.value)} />
         </div>
       </div>
 
-      <div className="row">
-        <div>
+      <div className="row container-gender">
+        <div className="header">
           <Text>Gender : </Text>
         </div>
-        <div>
+        <div className="input">
           <Radio.Group value={gender} onChange={e => setGender(e.target.value)}>
             {Object.values(Gender).map(item => {
               return (
@@ -152,31 +191,33 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
         </div>
       </div>
 
-      <div className="row">
-        <div>
+      <div className="row container-mobile-phone">
+        <div className="header">
           <Text>Mobile Phone : </Text>
           <Text type="danger">*</Text>
         </div>
 
-        <div>
-          <Select value={mobileCode} onChange={valueChanged => setMobileCode(valueChanged)}>
-            {Object.values(PhoneCode).map(item => {
-              return (
-                <Select.Option key={item} value={item}>
-                  {item}
-                </Select.Option>
-              )
-            })}
-          </Select>
-        </div>
-        <Text>-</Text>
-        <div>
+        <Select
+          className="select"
+          value={mobileCode}
+          onChange={valueChanged => setMobileCode(valueChanged)}
+        >
+          {Object.values(PhoneCode).map(item => {
+            return (
+              <Select.Option key={item} value={item}>
+                {item}
+              </Select.Option>
+            )
+          })}
+        </Select>
+        <Text className="dash">-</Text>
+        <div className="input">
           <Input value={mobilePhone} onChange={e => setMobilePhone(e.target.value)} />
         </div>
       </div>
 
-      <div className="row">
-        <div>
+      <div className="row container-passport">
+        <div className="header">
           <Text>Passport No : </Text>
         </div>
         <div>
@@ -184,8 +225,8 @@ export const Information: React.FC<Props> = ({ defaultInfo, onSubmit }) => {
         </div>
       </div>
 
-      <div className="row">
-        <div>
+      <div className="row container-expect-salary">
+        <div className="header">
           <Text>Expected Salary : </Text>
           <Text type="danger">*</Text>
         </div>

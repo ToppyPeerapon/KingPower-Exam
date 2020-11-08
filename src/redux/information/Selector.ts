@@ -1,4 +1,3 @@
-import { findAllByAltText } from '@testing-library/react'
 import { Info } from '../../constant/Information'
 import { InformationState } from './Reducer'
 
