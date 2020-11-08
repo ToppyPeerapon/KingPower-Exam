@@ -1,15 +1,43 @@
+import { Info } from '../../constant/Information'
+
 export enum InformationActionTypes {
-  UpdateFirstName = 'UPDATE_FIRST_NAME',
+  UpdateInfo = 'UPDATE_INFO',
+  SetInfo = 'SET_INFO',
+  DeleteInfo = 'DELETE_INFO',
 }
 
-export type UpdateFirstNameAction = {
-  type: InformationActionTypes.UpdateFirstName
-  payload: string
+export type UpdateInfoAction = {
+  type: InformationActionTypes.UpdateInfo
+  payload: Info
 }
 
-export const updateFirstName = (payload: string): UpdateFirstNameAction => {
+export type SetInfoAction = {
+  type: InformationActionTypes.SetInfo
+  payload: Info[]
+}
+
+export type DeleteInfoAction = {
+  type: InformationActionTypes.DeleteInfo
+  payload: Info['id']
+}
+
+export const updateInfo = (payload: Info): UpdateInfoAction => {
   return {
-    type: InformationActionTypes.UpdateFirstName,
+    type: InformationActionTypes.UpdateInfo,
+    payload,
+  }
+}
+
+export const setInfo = (payload: Info[]): SetInfoAction => {
+  return {
+    type: InformationActionTypes.SetInfo,
+    payload,
+  }
+}
+
+export const deleteInfo = (payload: Info['id']): DeleteInfoAction => {
+  return {
+    type: InformationActionTypes.DeleteInfo,
     payload,
   }
 }

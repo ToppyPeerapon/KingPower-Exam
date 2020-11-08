@@ -1,0 +1,11 @@
+.container {
+  margin: 1vw;
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  flex-direction: row;
+  display: flex;
+  flex: 1;
+}
